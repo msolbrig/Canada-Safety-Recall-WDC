@@ -42,9 +42,29 @@
   tableau.registerConnector(myConnector);
 })();
 
+  function _getLanguage(language) {
+    if (language == "French")
+      return "fr";
+    return "en";
+  }
+  
+  function _getCategory(category) {
+    switch ( category )  {
+      case "Food":
+        return "1";
+      case "Vehicles":
+        return "2";
+      case "Health":
+        return 3;
+      case "Consumer":
+        return 4;
+    }
+    return "";
+  }
+
   function _buildUrl(searchTerm, category, language) {
     var url = "http://healthycanadians.gc.ca/recall-alert-rappel-avis/api/search?search="
-        + searchTerm + "&lang=en&cat=" + category + "&lim=100&off=0
+        + searchTerm + "&lang=" + _getLanguage(language) + "&cat=" + getCategory(category) + "&lim=100&off=0
     return url;
   }
 
@@ -58,7 +78,7 @@ function _retrieveJsonData(retrieveDataCallback) {
       retrieveDataCallback(window.cachedTableData);
     };
     // Go get the json data
-    url = _buildUrl(conData. 
+    url = _buildUrl(conData.searchTerm, conData.category, conData.language); 
 
     // This is the first, and most basic, of many attempts to get the data.
     // We make different attempts that use different approaches, because if
